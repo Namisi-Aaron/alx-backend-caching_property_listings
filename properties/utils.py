@@ -14,3 +14,25 @@ def get_all_properties():
         return properties, 200
     except Exception as e:
         return {"error": str(e)}, 500
+
+def get_redis_cache_metrics():
+    '''
+    Connects to Redis via django_redis.
+    Get keyspace_hits and keyspace_misses from INFO.
+    Calculate hit ratio (hits / (hits + misses)).
+    Log metrics and return a dictionary.
+    '''
+    try:
+        cache_info = cache.client.info()
+        hits = cache_info.get("keyspace_hits", 0)
+        misses = cache_info.get("keyspace_misses", 0)
+        hit_ratio = hits / (hits + misses) if (hits + misses) > 0 else 0
+        metrics = {
+            "keyspace_hits": hits,
+            "keyspace_misses": misses,
+            "hit_ratio": hit_ratio
+        }
+        return metrics, 200
+    
+    except Exception as e:
+        return {"error": str(e)}, 500
