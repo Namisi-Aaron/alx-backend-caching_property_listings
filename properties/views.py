@@ -4,6 +4,8 @@ from properties.models import Property
 
 @cache_page(60 * 15)
 def property_list(request):
-    properties = Property.objects.all()
-    data = {"properties": list(properties.values())}
-    return JsonResponse(data)
+    try:
+        properties = Property.objects.all()
+        return JsonResponse({"properties": list(properties.values())})
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
