@@ -88,8 +88,8 @@ DATABASES = {
         'NAME': get_env_var('POSTGRES_DB'),
         'USER': get_env_var('POSTGRES_USER'),
         'PASSWORD': get_env_var('POSTGRES_PASSWORD'),
-        'HOST': get_env_var('POSTGRES_HOST'),
-        'PORT': get_env_var('POSTGRES_PORT'),
+        'HOST': 'postgres',
+        'PORT': '5432',
     }
 }
 
