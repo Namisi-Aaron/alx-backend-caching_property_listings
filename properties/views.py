@@ -6,6 +6,6 @@ from properties.models import Property
 def property_list(request):
     try:
         properties = Property.objects.all()
-        return JsonResponse({"properties": list(properties.values())})
+        return JsonResponse(data={"properties": list(properties.values())}, status=200)
     except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
+        return JsonResponse(data={"error": str(e)}, status=500)
